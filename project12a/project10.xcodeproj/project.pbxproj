@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C7E793CB24B851EA00341DFC /* project10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project10.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7E793CB24B851EA00341DFC /* project12a.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project12a.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7E793CE24B851EA00341DFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7E793D024B851EA00341DFC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C7E793D224B851EA00341DFC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		C7E793CC24B851EA00341DFC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C7E793CB24B851EA00341DFC /* project10.app */,
+				C7E793CB24B851EA00341DFC /* project12a.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,7 +90,7 @@
 			);
 			name = project10;
 			productName = project10;
-			productReference = C7E793CB24B851EA00341DFC /* project10.app */;
+			productReference = C7E793CB24B851EA00341DFC /* project12a.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -298,8 +298,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = user165519.project10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = user165519.project12a;
+				PRODUCT_NAME = project12a;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -315,8 +315,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = user165519.project10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = user165519.project12a;
+				PRODUCT_NAME = project12a;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
