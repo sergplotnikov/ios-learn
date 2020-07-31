@@ -1,0 +1,5 @@
+google.com
+apple.com
+yandex.ru
+yahoo.com
+bbc.com
