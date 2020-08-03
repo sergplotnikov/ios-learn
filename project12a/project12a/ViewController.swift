@@ -18,6 +18,15 @@ class ViewController: UICollectionViewController,UIImagePickerControllerDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view.
        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        
+        let defaults = UserDefaults.standard
+
+        if let savedPeople = defaults.object(forKey: "people") as? Data {
+            if let decodedPeople = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedPeople) as? [Person] {
+                people = decodedPeople
+            }
+        }
+        
     }
 
 
@@ -74,6 +83,7 @@ class ViewController: UICollectionViewController,UIImagePickerControllerDelegate
              guard let newName = ac2?.textFields?[0].text else { return }
              person.name = newName
              self?.collectionView.reloadData()
+            self?.save()
          })
         self?.present(ac2, animated: true)
     })
@@ -83,6 +93,7 @@ class ViewController: UICollectionViewController,UIImagePickerControllerDelegate
         ac2.addAction(UIAlertAction(title: "Yes", style: .default) { [weak self, weak ac2] _ in
             self?.people.remove(at: indexPath.item)
             self?.collectionView.reloadData()
+            self?.save()            
         })
          ac2.addAction(UIAlertAction(title: "No", style: .cancel))
         self?.present(ac2, animated: true)
@@ -127,6 +138,12 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
     
+    func save() {
+    if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: people, requiringSecureCoding: false) {
+        let defaults = UserDefaults.standard
+        defaults.set(savedData, forKey: "people")
+        }
+    }
     
 }
 
