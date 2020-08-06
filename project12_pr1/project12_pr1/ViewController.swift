@@ -10,6 +10,8 @@ import UIKit
 //UITableViewDataSource, UITableViewDelegate
 class TableViewController: UITableViewController {
      var pictures = Array<String>()
+    var watchedNumbers: [String: Int] = [:]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +21,21 @@ class TableViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         //loadImages()
         performSelector(inBackground: #selector(loadImages), with: nil)
+        
+             let defaults = UserDefaults.standard
+        watchedNumbers = defaults.object(forKey:"watchedNumbers") as? [String: Int] ?? [String: Int]()
+        
+                
+
     }
     
+    func save() {
+
+             let defaults = UserDefaults.standard
+             defaults.set(watchedNumbers, forKey: "watchedNumbers")
+
+     }
+
     @objc func loadImages(){
         let fm = FileManager.default
               let path = Bundle.main.resourcePath!
@@ -49,7 +64,8 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("called tableView.cellForRowAt index=\(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-        cell.textLabel?.text = pictures[indexPath.row]+" ( " + "\(indexPath.row+1) of \(pictures.count) )"
+        var c = watchedNumbers[pictures[indexPath.row]] ?? 0
+        cell.textLabel?.text = pictures[indexPath.row]+" ( " + "\(indexPath.row+1) of \(pictures.count) ) (watched:\(c))"
         return cell
     }
   
@@ -59,8 +75,15 @@ class TableViewController: UITableViewController {
             vc.selectedImage = pictures[indexPath.row]
             vc.numberOfPics = pictures.count
             vc.currentPicture = indexPath.row+1
+            var c = watchedNumbers[pictures[indexPath.row]] ?? 0
+            c += 1
+            watchedNumbers[pictures[indexPath.row]] = c
+            save()
             navigationController?.pushViewController(vc, animated: false)
         }
+
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+        
     }
     
 }
