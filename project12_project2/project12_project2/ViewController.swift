@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var btton1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
+    var highScore: Int = 0
     
     var countries = [String]()
     var score = 0
@@ -30,22 +31,41 @@ class ViewController: UIViewController {
         button3.layer.borderColor = UIColor.lightGray.cgColor
         
         askQuestion(action: nil)
+          let defaults = UserDefaults.standard
+        highScore = defaults.object(forKey:"HighScore") as? Int ?? 0
+        print("highScore=\(highScore)")
+        //highScore=0
+        //save()
     }
+    
+    func save() {
+
+             let defaults = UserDefaults.standard
+             defaults.set(highScore, forKey: "HighScore")
+
+     }
+
+
 
     func askQuestion(action: UIAlertAction! = nil){
-        if totalQuestions > 3 {
-            let ac = UIAlertController(title: "Game over", message: "Your final score is \(score) out of \(totalQuestions).",preferredStyle: .alert)
+        /*if totalQuestions > 3 {
+            var message = "Your final score is \(score) out of \(totalQuestions)."
+            if score > highScore {
+                highScore = score
+                save()
+                message += " You've set a new record"
+            }
+            let ac = UIAlertController(title: "Game over", message: message ,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Finish", style:  .default, handler: resetQuestion))
             present(ac, animated: true)
-            
-        }
-
+        }*/
+ 
         countries.shuffle()
         btton1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         correctAnswer = Int.random(in: 0...2)
-        title = "\(countries[correctAnswer].uppercased()). Your score is \(score) out of \(totalQuestions)."
+        title = "\(countries[correctAnswer].uppercased()). III Your score is \(score) out of \(totalQuestions)."
     }
     func resetQuestion(action: UIAlertAction! = nil){
              score = 0
@@ -64,11 +84,17 @@ class ViewController: UIViewController {
         }
         else {
             title = "Wrong. That's the flag of \(countries[sender.tag])"
-            score -= 0
+            //score -= 0
             
         }
                 if totalQuestions >= 3 {
-                    let ac = UIAlertController(title: "\(title). \nGame over", message: "Your final score is \(score) out of \(totalQuestions).",preferredStyle: .alert)
+                    var message = "Your final score is \(score) out of \(totalQuestions)."
+                    if score > highScore {
+                        highScore = score
+                        save()
+                        message += " You've set a new record"
+                    }
+                    let ac = UIAlertController(title: "\(title). \nGame over", message: message ,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Finish", style:  .default, handler: resetQuestion))
             present(ac, animated: true)
                 }else {
