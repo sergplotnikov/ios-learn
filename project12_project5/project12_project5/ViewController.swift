@@ -12,6 +12,7 @@ class ViewController: UITableViewController {
 
     var allWords = [String]()
     var usedWords = [String]()
+    var currentWord = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +31,25 @@ class ViewController: UITableViewController {
         
         let newGame=UIBarButtonItem( barButtonSystemItem: UIBarButtonItem.SystemItem.refresh, target: self, action: #selector(setNewGame))
         navigationItem.leftBarButtonItems = [newGame]
-        startGame()
+        
+           let defaults = UserDefaults.standard
+         usedWords = defaults.object(forKey:"usedWords") as? [String] ?? [String]()
+         currentWord = defaults.object(forKey:"currentWord") as? String ?? ""
+        if (currentWord.isEmpty || usedWords.count == 0) {
+            startGame()
+        }
+        else {
+            title = currentWord
+        }
     }
+    
+    func save() {
+              currentWord = title ?? ""
+              let defaults = UserDefaults.standard
+              defaults.set(usedWords, forKey: "usedWords")
+        defaults.set(currentWord, forKey: "currentWord")
+      }
+
     
     @objc func setNewGame(){
         startGame()
@@ -42,6 +60,7 @@ class ViewController: UITableViewController {
         title = allWords.randomElement()
         print(title)
         usedWords.removeAll(keepingCapacity: true)
+        save()
         //tableView.reloadData()
     }
     
@@ -84,7 +103,7 @@ class ViewController: UITableViewController {
                     
                 
                     usedWords.insert(answer.lowercased(), at: 0)
-
+                    save()
                 let indexPath = IndexPath(row: 0, section: 0)
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 return
